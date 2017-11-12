@@ -25,24 +25,12 @@ import 'models'
 Item {
     id: root
 
-    function getTime() {
-        return new Date().getTime()
-    }
+    Connections {
+        target: phone
 
-    // Elapsed time in hh:mm:ss format
-    function getElapsedTimeString(startTime) {
-        var seconds = Math.floor((getTime() - startTime) / 1000);
-        var time = new Date(null);
-        time.setSeconds(seconds);
-        return time.toISOString().substr(11, 8);
-    }
-
-    Timer {
-        id: callTimer
-        interval: 1000
-        repeat: true
-        property var startTime
-        onTriggered: callStateLabel.text = getElapsedTimeString(startTime)
+        onElapsedTimeChanged: {
+            callStateLabel.text = phone.elapsedTime
+        }
     }
 
     Connections {
@@ -60,12 +48,9 @@ Item {
                 callStateLabel.text = "Dialing " + telephony.callColp
             } else if (telephony.callState == "active") {
                 rejectButton.active = false
-                callTimer.startTime = getTime()
-                callTimer.restart()
             } else if (telephony.callState == "disconnected") {
                 rejectButton.active = false
                 callButton.checked = false
-                callTimer.stop()
                 callStateLabel.text = ""
             }
         }

@@ -70,6 +70,7 @@ int main(int argc, char *argv[])
 	Telephony *telephony = new Telephony(bindingAddress);
 	context->setContextProperty("telephony", telephony);
 	Phone *phone = new Phone(telephony);
+	context->setContextProperty("phone", phone);
 	QObject::connect(telephony, &Telephony::callStateChanged, phone, &Phone::onCallStateChanged);
     }
 
