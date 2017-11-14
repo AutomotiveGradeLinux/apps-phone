@@ -7,7 +7,7 @@ HEADERS = phone.h
 SUBDIRS = telephony-binding
 
 CONFIG += link_pkgconfig
-PKGCONFIG += qtappfw
+PKGCONFIG += libhomescreen qlibwindowmanager qtappfw
 
 RESOURCES += \
     phone.qrc \
