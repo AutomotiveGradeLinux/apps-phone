@@ -30,7 +30,7 @@ static void call_added(OrgOfonoVoiceCallManager *manager,
 	GVariantIter *iter;
 	gchar *key;
 	GVariant *value;
-	const gchar *state, *cl = NULL;
+	const gchar *state = NULL, *cl = NULL;
 
 	g_variant_get(properties, "a{sv}", &iter);
 	while (g_variant_iter_loop(iter, "{sv}", &key, &value)) {
