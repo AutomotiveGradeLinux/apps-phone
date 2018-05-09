@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
         }
         // Create an event callback against an event type. Here a lambda is called when SyncDraw event occurs
         qwm->set_event_handler(QLibWindowmanager::Event_SyncDraw, [qwm, myname](json_object *object) {
+	    Q_UNUSED(object);
             fprintf(stderr, "Surface got syncDraw!\n");
             qwm->endDraw(myname);
         });
