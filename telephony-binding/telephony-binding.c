@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Konsulko Group
+ * Copyright (C) 2017-2018 Konsulko Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -178,6 +178,88 @@ static void *main_loop_thread(void *unused)
 	return NULL;
 }
 
+static int ofono_init_default_modem(void)
+{
+	int ret = 0;
+	const gchar *modem_path = ofono_manager_get_default_modem_path();
+
+	if (modem_path) {
+		vcm = ofono_voicecallmanager_init(modem_path,
+				incoming_call_cb,
+				dialing_call_cb,
+				terminated_call_cb);
+		if (!vcm) {
+			AFB_ERROR("failed to initialize voice call manager\n");
+			ret = -1;
+		}
+	} else {
+		AFB_ERROR("default modem not set\n");
+		ret = -1;
+	}
+
+	return ret;
+}
+
+static gboolean is_hfp_dev_and_init(struct json_object *dev)
+{
+	int ret;
+	gboolean hfp = FALSE;
+	struct json_object *name, *address, *hfp_connected;
+	json_object_object_get_ex(dev, "Name", &name);
+	json_object_object_get_ex(dev, "Address", &address);
+	json_object_object_get_ex(dev, "HFPConnected", &hfp_connected);
+	if (!strcmp(json_object_get_string(hfp_connected), "True")) {
+		ret = ofono_manager_set_default_modem(json_object_get_string(address));
+		if (ret == 0) {
+			ofono_init_default_modem();
+			hfp = TRUE;
+		}
+	}
+
+	return hfp;
+}
+
+static void discovery_result_cb(void *closure, int status, struct json_object *result)
+{
+	enum json_type type;
+	struct json_object *devs, *dev;
+	int i;
+
+	json_object_object_foreach(result, key, val) {
+		type = json_object_get_type(val);
+		switch (type) {
+			case json_type_array:
+				json_object_object_get_ex(result, key, &devs);
+				for (i = 0; i < json_object_array_length(devs); i++) {
+					dev = json_object_array_get_idx(devs, i);
+					if (is_hfp_dev_and_init(dev))
+						break;
+				}
+				break;
+			case json_type_string:
+			case json_type_boolean:
+			case json_type_double:
+			case json_type_int:
+			case json_type_object:
+			case json_type_null:
+			default:
+				break;
+		}
+	}
+}
+
+static void ofono_hfp_init(void)
+{
+	struct json_object *args, *response;
+
+	args = json_object_new_object();
+	json_object_object_add(args , "value", json_object_new_string("connection"));
+	afb_service_call_sync("Bluetooth-Manager", "subscribe", args, &response);
+
+	args = json_object_new_object();
+	afb_service_call("Bluetooth-Manager", "discovery_result", args, discovery_result_cb, &response);
+}
+
 static int ofono_init(void)
 {
 	pthread_t tid;
@@ -188,29 +270,21 @@ static int ofono_init(void)
 	incoming_call_event = afb_daemon_make_event("incomingCall");
 	terminated_call_event = afb_daemon_make_event("terminatedCall");
 
+	ret = afb_daemon_require_api("Bluetooth-Manager", 1);
+	if (ret) {
+		AFB_ERROR("unable to initialize bluetooth binding");
+		return -1;
+	}
+
 	/* Start the main loop thread */
 	pthread_create(&tid, NULL, main_loop_thread, NULL);
 
 	ret = ofono_manager_init();
 	if (ret == 0) {
-		const gchar *modem_path = ofono_manager_get_default_modem_path();
-		if (modem_path) {
-			AFB_DEBUG("modem_path: %s\n", modem_path);
-			vcm = ofono_voicecallmanager_init(modem_path,
-					incoming_call_cb,
-					dialing_call_cb,
-					terminated_call_cb);
-			if (!vcm) {
-				AFB_ERROR("failed to initialize voice call manager\n");
-				ret = -1;
-			}
-		} else {
-			AFB_ERROR("default modem not set\n");
-			ret = -1;
-		}
+		ofono_manager_invalidate_default_modem();
+		ofono_hfp_init();
 	} else {
-		AFB_ERROR("failed to initialize ofono manager: " \
-				 "HFP device not connected or Bluetooth disabled\n");
+		AFB_ERROR("failed to initialize ofono manager");
 	}
 
 	return ret;
@@ -257,9 +331,41 @@ static int init()
 	return ofono_init();
 }
 
+static void process_connection_event(struct json_object *object)
+{
+	struct json_object *args, *response, *status_obj, *address_obj;
+	const char *status, *address;
+
+	json_object_object_get_ex(object, "Status", &status_obj);
+	status = json_object_get_string(status_obj);
+
+	if (!g_strcmp0(status, "connected")) {
+		args = json_object_new_object();
+		afb_service_call("Bluetooth-Manager", "discovery_result",
+				 args, discovery_result_cb, &response);
+	} else if (!g_strcmp0(status, "disconnected")) {
+		json_object_object_get_ex(object, "Address", &address_obj);
+		address = json_object_get_string(address_obj);
+		if (!g_strcmp0(address, ofono_manager_get_default_modem_address())) {
+			ofono_manager_invalidate_default_modem();
+			ofono_voicecallmanager_free(vcm);
+		}
+	} else
+		AFB_ERROR("Unsupported connection status: %s\n", status);
+}
+
+static void onevent(const char *event, struct json_object *object)
+{
+	if (!g_strcmp0(event, "Bluetooth-Manager/connection"))
+		process_connection_event(object);
+	 else
+		AFB_ERROR("Unsupported event: %s\n", event);
+}
+
 const struct afb_binding_v2 afbBindingV2 = {
 	.api = "telephony",
 	.specification = NULL,
 	.verbs = verbs,
 	.init = init,
+	.onevent = onevent,
 };
