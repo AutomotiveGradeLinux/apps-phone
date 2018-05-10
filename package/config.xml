@@ -3,7 +3,7 @@
   <name>Phone</name>
   <icon src="icon.svg"/>
   <content src="bin/phone" type="application/vnd.agl.native"/>
-  <description>This is a demo phone application</description>
+  <description>Phone Dialer Application</description>
   <author>Qt</author>
   <license>APL 2.0</license>
   <feature name="urn:AGL:widget:required-api">
