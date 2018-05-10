@@ -250,13 +250,6 @@ static const struct afb_verb_v2 verbs[]= {
 	{NULL}
 };
 
-static int preinit()
-{
-	AFB_NOTICE("Pre-init telephony service");
-
-	return 0;
-}
-
 static int init()
 {
 	AFB_NOTICE("Initializing telephony service");
@@ -268,6 +261,5 @@ const struct afb_binding_v2 afbBindingV2 = {
 	.api = "telephony",
 	.specification = NULL,
 	.verbs = verbs,
-	.preinit = preinit,
 	.init = init,
 };
