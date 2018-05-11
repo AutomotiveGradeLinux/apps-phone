@@ -55,7 +55,6 @@ static void call_removed(OrgOfonoVoiceCallManager *manager,
 	g_signal_emit_by_name(manager, "terminated-call", op);
 }
 
-
 const OrgOfonoVoiceCallManager
 *ofono_voicecallmanager_init(const gchar *op,
 			     void (*incoming_call)(OrgOfonoVoiceCallManager *manager,gchar *,gchar *),
@@ -122,6 +121,11 @@ const OrgOfonoVoiceCallManager
 	}
 
 	return manager;
+}
+
+void ofono_voicecallmanager_free(OrgOfonoVoiceCallManager *vcm)
+{
+	g_object_unref(G_OBJECT(vcm));
 }
 
 gchar *ofono_voicecallmanager_dial(OrgOfonoVoiceCallManager *manager,

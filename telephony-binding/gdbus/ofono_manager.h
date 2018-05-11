@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Konsulko Group
+ * Copyright (C) 2017-2018 Konsulko Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,12 @@
 #include <afb/afb-service-itf.h>
 
 int ofono_manager_init(void);
+void ofono_manager_invalidate_default_modem(void);
+int ofono_manager_set_default_modem(const char *);
+const gchar *ofono_manager_get_default_modem_address(void);
 const gchar *ofono_manager_get_default_modem_path(void);
 const gchar *ofono_manager_get_default_modem_name(void);
 const gchar *ofono_manager_get_default_modem_type(void);
 gboolean ofono_manager_get_default_modem_powered(void);
 gboolean ofono_manager_get_default_modem_online(void);
+gboolean ofono_manager_get_default_modem_valid(void);

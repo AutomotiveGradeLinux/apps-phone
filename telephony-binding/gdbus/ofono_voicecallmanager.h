@@ -23,5 +23,6 @@ OrgOfonoVoiceCallManager
 			     void(*)(OrgOfonoVoiceCallManager *, gchar *, gchar *),
 			     void(*)(OrgOfonoVoiceCallManager *, gchar *, gchar *),
 			     void(*)(OrgOfonoVoiceCallManager *, gchar *));
+void ofono_voicecallmanager_free(OrgOfonoVoiceCallManager *);
 gchar *ofono_voicecallmanager_dial(OrgOfonoVoiceCallManager *, gchar *, gchar *);
 void ofono_hangup_all(OrgOfonoVoiceCallManager *);
