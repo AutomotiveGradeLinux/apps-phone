@@ -17,8 +17,9 @@
 #include <glib.h>
 
 #define _GNU_SOURCE
+
+#define AFB_BINDING_VERSION 2
 #include <afb/afb-binding.h>
-#include <afb/afb-service-itf.h>
 
 int ofono_manager_init(void);
 void ofono_manager_invalidate_default_modem(void);

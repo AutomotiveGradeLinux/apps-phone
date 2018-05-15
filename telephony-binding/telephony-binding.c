@@ -22,7 +22,6 @@
 
 #define AFB_BINDING_VERSION 2
 #include <afb/afb-binding.h>
-#include <afb/afb-service-itf.h>
 
 #include "ofono_manager.h"
 #include "ofono_voicecallmanager.h"
