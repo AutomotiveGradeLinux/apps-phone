@@ -2,7 +2,7 @@ TARGET = phone
 QT = quickcontrols2 websockets multimedia
 
 SOURCES = main.cpp phone.cpp
-HEADERS = phone.h
+HEADERS = phone.h numbertype.h
 
 SUBDIRS = telephony-binding
 

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016 The Qt Company Ltd.
+ * Copyright (C) 2018 Konsulko Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +16,26 @@
  */
 
 import QtQuick 2.6
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import AGL.Demo.Controls 1.0
+import NumberType 1.0
 import 'models'
 
 Item {
     id: root
+
+    function display_type(type) {
+        if (type == NumberType.Mobile) {
+            return "M"
+        } else if (type == NumberType.Work) {
+            return "W"
+        } else if (type == NumberType.Home) {
+            return "H"
+        } else {
+            return "O"
+        }
+    }
 
     signal call(var contact)
     signal cancel
@@ -47,11 +61,11 @@ Item {
         model: ContactsModel {}
         delegate: MouseArea {
             width: ListView.view.width
-            height: width / 5
+            height: width / 3
             RowLayout {
                 anchors.fill: parent
                 anchors.leftMargin: 200
-                spacing: 20
+                spacing: 100
                 Image {
                     source: './images/HMI_ContactScreen_ImageHolder-01.svg'
                 }
@@ -59,14 +73,18 @@ Item {
                     Label {
                         Layout.fillWidth: true
                         color: '#59FF7F'
-                        text: model.name
+                        font.pixelSize: 50
+                        text: name
                     }
 
-                    Label {
-                        Layout.fillWidth: true
-                        font.pixelSize: 30
-                        text: model.number
-                    }
+                   Repeater {
+                        model: numbers
+                        delegate: Label {
+                            Layout.fillWidth: true
+                            font.pixelSize: 50
+                            text: display_type(type) + ": " + number
+                       }
+                   }
                 }
             }
             onClicked: {
