@@ -37,7 +37,7 @@ Item {
         }
     }
 
-    signal call(var contact)
+    signal call(var cname, var cnumber)
     signal cancel
 
     ListView {
@@ -88,7 +88,7 @@ Item {
                 }
             }
             onClicked: {
-                root.call(model)
+                root.call(model.name, model.numbers.get(0).number)
             }
         }
         section.property: 'name'

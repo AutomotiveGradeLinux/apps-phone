@@ -57,9 +57,9 @@ Item {
     }
 
     signal showContacts
-    function call(contact) {
-        name.text = contact.name
-        var rawNumber = contact.numbers.get(0).number
+    function call(cname, cnumber) {
+        name.text = cname
+        var rawNumber = cnumber
         number.text = rawNumber.replace(/-/g, '')
         callButton.checked = true
     }
