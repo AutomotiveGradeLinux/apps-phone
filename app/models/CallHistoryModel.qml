@@ -6,29 +6,34 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import QtQml.Models 2.2
+import CallType 1.0
 
 ListModel {
     ListElement {
         name: "Droopy"
         number: "8003451234"
         time: "2015-01-05 07:15"
+        type: CallType.Missed
     }
 
     ListElement {
         name: "Doc"
         number: "8003451234"
         time: "2015-01-05 07:15"
+        type: CallType.Incoming
     }
 
     ListElement {
         name: "Grumpy"
         number: "8003451234"
         time: "2015-01-05 07:15"
+        type: CallType.Outgoing
     }
 
     ListElement {
         name: "Bashful"
         number: "8003451234"
         time: "2015-01-05 07:15"
+        type: CallType.Incoming
     }
 }

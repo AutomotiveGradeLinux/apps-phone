@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2016 The Qt Company Ltd.
- * Copyright (C) 2017 Konsulko Group
+ * Copyright (C) 2017-2018 Konsulko Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,22 +56,11 @@ Item {
         }
     }
 
-    signal showContacts
     function call(cname, cnumber) {
         name.text = cname
         var rawNumber = cnumber
         number.text = rawNumber.replace(/-/g, '')
         callButton.checked = true
-    }
-
-    ImageButton {
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.margins: 60
-        width: 172
-        height: 172
-        offImage: './images/HMI_Phone_Contacts-01.svg'
-        onClicked: root.showContacts()
     }
 
     ColumnLayout {

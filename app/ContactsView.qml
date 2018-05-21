@@ -38,26 +38,9 @@ Item {
     }
 
     signal call(var cname, var cnumber)
-    signal cancel
 
     ListView {
         anchors.fill: parent
-        header: Item {
-            width: parent.width
-            height: 200
-            RowLayout {
-                anchors.fill: parent
-                anchors.margins: 50
-                Label {
-                    Layout.fillWidth: true
-                    text: 'Contacts'
-                }
-                ImageButton {
-                    offImage: './images/HMI_ContactScreen_X-01.svg'
-                    onClicked: root.cancel()
-                }
-            }
-        }
         model: ContactsModel {}
         delegate: MouseArea {
             width: ListView.view.width
@@ -105,3 +88,4 @@ Item {
         }
     }
 }
+

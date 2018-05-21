@@ -2,9 +2,11 @@
     <qresource prefix="/">
         <file>Phone.qml</file>
         <file>Dialer.qml</file>
+	<file>Recents.qml</file>
         <file>models/CallHistoryModel.qml</file>
         <file>models/ContactsModel.qml</file>
         <file>models/qmldir</file>
         <file>ContactsView.qml</file>
+	<file>TabImageButton.qml</file>
     </qresource>
 </RCC>
