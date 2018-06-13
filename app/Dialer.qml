@@ -42,6 +42,7 @@ Item {
 
         onCallStateChanged: {
             if (telephony.callState == "incoming") {
+                pbap.search(telephony.callClip)
                 rejectButton.active = true
                 callStateLabel.text = "Incoming call from " + telephony.callClip
             } else if (telephony.callState == "dialing") {
@@ -52,6 +53,20 @@ Item {
                 rejectButton.active = false
                 callButton.checked = false
                 callStateLabel.text = ""
+            }
+        }
+    }
+
+    Connections {
+        target: pbap
+
+        onSearchResults: {
+            if (name != "Not Found") {
+                if (telephony.callState == "incoming") {
+                    callStateLabel.text = "Incoming call from " + name
+                } else if (telephony.callState == "dialing") {
+                    callStateLabel.text = "Dialing " + name
+                }
             }
         }
     }
@@ -149,6 +164,7 @@ Item {
                     if (telephony.callState == "incoming") {
                         telephony.answer()
                     } else {
+                        pbap.search(number.text)
                         telephony.dial(number.text)
                     }
                 } else {

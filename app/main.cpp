@@ -26,6 +26,7 @@
 #include <libhomescreen.hpp>
 #include <qlibwindowmanager.h>
 
+#include <pbap.h>
 #include <telephony.h>
 #include "calltype.h"
 #include "phone.h"
@@ -65,6 +66,7 @@ int main(int argc, char *argv[])
 	context->setContextProperty("telephony", telephony);
 	Phone *phone = new Phone(telephony);
 	context->setContextProperty("phone", phone);
+	context->setContextProperty("pbap", new Pbap(bindingAddress));
 	QObject::connect(telephony, &Telephony::callStateChanged, phone, &Phone::onCallStateChanged);
         std::string token = secret.toStdString();
         LibHomeScreen* hs = new LibHomeScreen();

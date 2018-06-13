@@ -11,6 +11,7 @@
     <param name="homescreen" value="ws" />
     <param name="lib/libtelephony-binding.so" value="local" />
     <param name="Bluetooth-Manager" value="ws" />
+    <param name="bluetooth-pbap" value="ws" />
   </feature>
   <feature name="urn:AGL:widget:required-permission">
     <param name="urn:AGL:permission::public:no-htdocs" value="required" />
