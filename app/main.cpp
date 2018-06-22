@@ -28,7 +28,6 @@
 
 #include <pbap.h>
 #include <telephony.h>
-#include "calltype.h"
 #include "phone.h"
 #include "numbertype.h"
 
@@ -102,7 +101,6 @@ int main(int argc, char *argv[])
             }
         });
 
-	qmlRegisterUncreatableType<CallType>("CallType", 1, 0, "CallType", "Not creatable as it is an enum type");
 	qmlRegisterUncreatableType<NumberType>("NumberType", 1, 0, "NumberType", "Not creatable as it is an enum type");
 
         engine.load(QUrl(QStringLiteral("qrc:/Phone.qml")));
