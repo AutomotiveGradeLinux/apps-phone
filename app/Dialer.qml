@@ -160,7 +160,6 @@ Item {
                     var contact = {'name': name.text, 'number': number.text}
                     if (contact.name === '')
                         contact.name = 'Unknown'
-                    history.insert(0, contact)
                     if (telephony.callState == "incoming") {
                         telephony.answer()
                     } else {
@@ -192,7 +191,7 @@ Item {
             Layout.preferredHeight: 130
             orientation: Qt.Horizontal
             clip: true
-            model: CallHistoryModel { id: history }
+            model: RecentCallModel
 
             delegate: MouseArea {
                 width: root.width / 2.5
@@ -207,17 +206,17 @@ Item {
                         Label {
                             Layout.fillWidth: true
                             color: '#59FF7F'
-                            text: model.name
+                            text: model.modelData.name
                         }
 
                         Label {
                             Layout.fillWidth: true
                             font.pixelSize: 30
-                            text: model.number
+                            text: model.modelData.number
                         }
                     }
                 }
-                onClicked: root.call(model)
+                onClicked: root.call(model.modelData.name, model.modelData.number)
             }
         }
     }

@@ -18,18 +18,18 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.0
 import AGL.Demo.Controls 1.0
-import CallType 1.0
+import RecentCall 1.0
 import 'models'
 
 Item {
     id: root
 
     function log_icon(type) {
-        if (type == CallType.Missed) {
+        if (type == RecentCall.MISSED) {
             return './images/ic_call_missed_48px.svg'
-        } else if (type == CallType.Incoming) {
+        } else if (type == RecentCall.RECEIVED) {
             return './images/ic_call_received_48px.svg'
-        } else if (type == CallType.Outgoing) {
+        } else if (type == RecentCall.DIALED) {
             return './images/ic_call_made_48px.svg'
         }
     }
@@ -40,7 +40,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 100
 
-        model: CallHistoryModel { id: history }
+        model: RecentCallModel
 
         delegate: MouseArea {
             width: ListView.view.width
@@ -49,7 +49,7 @@ Item {
                 anchors.fill: parent
                 spacing: 50
                 Image {
-                    source: log_icon(model.type)
+                    source: log_icon(model.modelData.type)
                     Layout.preferredWidth: 150
                     Layout.preferredHeight: 150
                 }
@@ -63,17 +63,17 @@ Item {
                         Layout.fillWidth: true
                         color: '#59FF7F'
                         font.pixelSize: 50
-                        text: model.name
+                        text: model.modelData.name
                     }
 
                     Label {
                         Layout.fillWidth: true
                         font.pixelSize: 50
-                        text: new Date(model.time).toLocaleString(Qt.locale(), "ddd MMM d 'at' HH':'mm")
+                        text: new Date(model.modelData.datetime).toLocaleString(Qt.locale(), "ddd MMM d 'at' HH':'mm")
                     }
                 }
             }
-            onClicked: root.call(model.name, model.number)
+            onClicked: root.call(model.modelData.name, model.modelData.number)
         }
     }
 }

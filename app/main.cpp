@@ -66,8 +66,8 @@ int main(int argc, char *argv[])
 	context->setContextProperty("telephony", telephony);
 	Phone *phone = new Phone(telephony);
 	context->setContextProperty("phone", phone);
-	context->setContextProperty("pbap", new Pbap(bindingAddress));
 	QObject::connect(telephony, &Telephony::callStateChanged, phone, &Phone::onCallStateChanged);
+	context->setContextProperty("pbap", new Pbap(bindingAddress, context));
         std::string token = secret.toStdString();
         LibHomeScreen* hs = new LibHomeScreen();
         QLibWindowmanager* qwm = new QLibWindowmanager();
