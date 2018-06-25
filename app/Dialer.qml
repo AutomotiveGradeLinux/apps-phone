@@ -50,6 +50,7 @@ Item {
             } else if (telephony.callState == "active") {
                 rejectButton.active = false
             } else if (telephony.callState == "disconnected") {
+                pbap.refreshCalls(100);
                 rejectButton.active = false
                 callButton.checked = false
                 callStateLabel.text = ""
