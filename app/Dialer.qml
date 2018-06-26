@@ -20,7 +20,6 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.0
 import QtMultimedia 5.5
 import AGL.Demo.Controls 1.0
-import 'models'
 
 Item {
     id: root
