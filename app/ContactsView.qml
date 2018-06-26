@@ -19,19 +19,22 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import AGL.Demo.Controls 1.0
-import NumberType 1.0
-import 'models'
+import PhoneNumber 1.0
 
 Item {
     id: root
 
     function display_type(type) {
-        if (type == NumberType.Mobile) {
+        if (type == PhoneNumber.CELL) {
             return "M"
-        } else if (type == NumberType.Work) {
+        } else if (type == PhoneNumber.WORK) {
             return "W"
-        } else if (type == NumberType.Home) {
+        } else if (type == PhoneNumber.HOME) {
             return "H"
+        } else if (type == PhoneNumber.FAX) {
+            return "F"
+        } else if (type == PhoneNumber.VOICE) {
+            return "V"
         } else {
             return "O"
         }
@@ -41,7 +44,8 @@ Item {
 
     ListView {
         anchors.fill: parent
-        model: ContactsModel {}
+        model: ContactsModel
+        //cacheBuffer: 2880
         delegate: MouseArea {
             width: ListView.view.width
             height: width / 3
@@ -57,21 +61,20 @@ Item {
                         Layout.fillWidth: true
                         color: '#59FF7F'
                         font.pixelSize: 50
-                        text: name
+                        text: model.modelData.name
                     }
-
-                   Repeater {
+                    Repeater {
                         model: numbers
                         delegate: Label {
                             Layout.fillWidth: true
                             font.pixelSize: 50
                             text: display_type(type) + ": " + number
-                       }
-                   }
+                        }
+                    }
                 }
             }
             onClicked: {
-                root.call(model.name, model.numbers.get(0).number)
+                root.call(model.name, model.numbers[0].number)
             }
         }
         section.property: 'name'
@@ -88,4 +91,3 @@ Item {
         }
     }
 }
-
