@@ -75,6 +75,9 @@ int main(int argc, char *argv[])
         if(qwm->init(port,secret) != 0){
             exit(EXIT_FAILURE);
         }
+
+        AGLScreenInfo screenInfo(qwm->get_scale_factor());
+
         // Request a surface as described in layers.json windowmanager’s file
         if (qwm->requestSurface(myname) != 0) {
             exit(EXIT_FAILURE);
@@ -103,6 +106,7 @@ int main(int argc, char *argv[])
 
 	qmlRegisterUncreatableType<NumberType>("NumberType", 1, 0, "NumberType", "Not creatable as it is an enum type");
 
+        engine.rootContext()->setContextProperty("screenInfo", &screenInfo);
         engine.load(QUrl(QStringLiteral("qrc:/Phone.qml")));
         QObject *root = engine.rootObjects().first();
         QQuickWindow *window = qobject_cast<QQuickWindow *>(root);

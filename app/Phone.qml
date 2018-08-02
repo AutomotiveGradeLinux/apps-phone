@@ -22,6 +22,16 @@ import QtQuick.Controls 2.0
 ApplicationWindow {
     id: root
 
+    width: container.width * container.scale
+    height: container.height * container.scale
+
+    Item {
+        id: container
+        anchors.centerIn: parent
+        width: 1080
+        height: 1487
+        scale: screenInfo.scale_factor()
+
     TabBar {
         id: bar
         width: parent.width
@@ -70,4 +80,5 @@ ApplicationWindow {
             id: dialer
         }
     }
+}
 }
