@@ -54,7 +54,9 @@ Item {
                 anchors.leftMargin: 200
                 spacing: 100
                 Image {
-                    source: './images/HMI_ContactScreen_ImageHolder-01.svg'
+                    source: model.modelData.photo ? model.modelData.photo : './images/HMI_ContactScreen_ImageHolder-01.svg'
+                    Layout.preferredWidth: 160
+                    Layout.preferredHeight: 160
                 }
                 ColumnLayout {
                     Label {
