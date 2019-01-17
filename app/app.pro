@@ -1,15 +1,14 @@
 TARGET = phone
-QT = quickcontrols2 websockets multimedia
+QT = quickcontrols2 websockets
 
-SOURCES = main.cpp phone.cpp
-HEADERS = phone.h numbertype.h
+SOURCES = main.cpp phone.cpp fileplayer.cpp
+HEADERS = phone.h numbertype.h fileplayer.h
 
 CONFIG += link_pkgconfig
-PKGCONFIG += libhomescreen qlibwindowmanager qtappfw
+PKGCONFIG += libhomescreen qlibwindowmanager qtappfw libafbwsc gstreamer-1.0
 
 RESOURCES += \
     phone.qrc \
-    images/images.qrc \
-    audio.qrc
+    images/images.qrc
 
 include(app.pri)

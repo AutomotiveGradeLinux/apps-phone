@@ -11,10 +11,12 @@
     <param name="homescreen" value="ws" />
     <param name="telephony" value="ws" />
     <param name="bluetooth-pbap" value="ws" />
+    <param name="ahl-4a" value="ws" />
   </feature>
   <feature name="urn:AGL:widget:required-permission">
     <param name="urn:AGL:permission::public:no-htdocs" value="required" />
     <param name="http://tizen.org/privilege/internal/dbus" value="required" />
+    <param name="urn:AGL:permission:audio:public:audiostream" value="required" />
   </feature>
 </widget>
 
