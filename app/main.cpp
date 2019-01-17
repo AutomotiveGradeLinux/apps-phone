@@ -30,6 +30,7 @@
 #include <telephony.h>
 #include "phone.h"
 #include "numbertype.h"
+#include "fileplayer.h"
 
 int main(int argc, char *argv[])
 {
@@ -63,11 +64,13 @@ int main(int argc, char *argv[])
 	context->setContextProperty(QStringLiteral("bindingAddress"), bindingAddress);
 	Telephony *telephony = new Telephony(bindingAddress);
 	context->setContextProperty("telephony", telephony);
-	Phone *phone = new Phone(telephony);
+	std::string token = secret.toStdString();
+	std::string install_dir = getenv("AFM_APP_INSTALL_DIR");
+	FilePlayer *player = new FilePlayer(port, token, install_dir + "/bin/Phone.wav", std::string("phone"));
+	Phone *phone = new Phone(telephony, player);
 	context->setContextProperty("phone", phone);
 	QObject::connect(telephony, &Telephony::callStateChanged, phone, &Phone::onCallStateChanged);
 	context->setContextProperty("pbap", new Pbap(bindingAddress, context));
-        std::string token = secret.toStdString();
         LibHomeScreen* hs = new LibHomeScreen();
         QLibWindowmanager* qwm = new QLibWindowmanager();
 

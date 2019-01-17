@@ -16,18 +16,14 @@
 
 #include <QDebug>
 #include <QObject>
-#include <QSoundEffect>
 #include <QTimer>
 #include <telephony.h>
 #include "phone.h"
 
-Phone::Phone(Telephony *telephony, QObject *parent) :
-	QObject(parent)
+Phone::Phone(Telephony *telephony, FilePlayer *player, QObject *parent) :
+	QObject(parent),
+	m_ringtone(player)
 {
-	m_ringtone.setSource(QUrl("qrc:./Phone.wav"));
-	m_ringtone.setVolume(0.5f);
-	m_ringtone.setLoopCount(QSoundEffect::Infinite);
-
 	QObject::connect(telephony, &Telephony::callStateChanged, this, &Phone::onCallStateChanged);
 
 	m_call_timer.setInterval(1000);
@@ -38,15 +34,18 @@ Phone::Phone(Telephony *telephony, QObject *parent) :
 void Phone::onCallStateChanged(QString callState)
 {
 	if (callState == "disconnected") {
-		m_ringtone.stop();
+		if (m_ringtone)
+			m_ringtone->stop();
 		m_call_timer.stop();
 	} else if (callState == "active") {
-		m_ringtone.stop();
+		if (m_ringtone)
+			m_ringtone->stop();
 		m_date_time = m_date_time.fromSecsSinceEpoch(0);
 		setElapsedTime("00:00:00");
 		m_call_timer.start();
 	} else if (callState == "incoming") {
-		m_ringtone.play();
+		if (m_ringtone)
+			m_ringtone->play(true);
 	}
 }
 

@@ -17,10 +17,10 @@
 #ifndef PHONE_H
 #define PHONE_H
 
-#include <QSoundEffect>
 #include <QTimer>
 
 #include <telephony.h>
+#include "fileplayer.h"
 
 class Phone : public QObject
 {
@@ -28,7 +28,7 @@ class Phone : public QObject
 	Q_PROPERTY(QString elapsedTime READ elapsedTime WRITE setElapsedTime NOTIFY elapsedTimeChanged)
 
 	public:
-		explicit Phone(Telephony *telephony, QObject *parent = Q_NULLPTR);
+		explicit Phone(Telephony *telephony, FilePlayer *player, QObject *parent = Q_NULLPTR);
 		void onCallStateChanged(QString);
 
 		QString elapsedTime() { return m_elapsed_time; }
@@ -46,7 +46,7 @@ class Phone : public QObject
 
 	private:
 		Telephony *m_telephony;
-		QSoundEffect m_ringtone;
+		FilePlayer *m_ringtone;
 		QTimer m_call_timer;
 		QDateTime m_date_time;
 		QString m_elapsed_time;
