@@ -27,9 +27,9 @@
 				<stop  offset="0.136" style="stop-color:#00ADDC;stop-opacity:0.94"/>
 				<stop  offset="0.9332" style="stop-color:#0DF9FF;stop-opacity:0.6"/>
 			</linearGradient>
-			<polyline class="st0" points="1.2,170.8 1.2,1.2 170.8,1.2 170.8,170.8 			"/>
+			<rect x="1" y="1" class="st0" width="169.5" height="169.5"/>
 			<text transform="matrix(1 5.460000e-03 -5.460000e-03 1 64.0738 111.6191)" class="st1 st2 st3">4</text>
-			<polyline class="st4" points="1.2,170.8 1.2,1.2 170.8,1.2 170.8,170.8 			"/>
+			<rect x="1" y="1" class="st4" width="169.5" height="169.5"/>
 		</g>
 	</g>
 </switch>

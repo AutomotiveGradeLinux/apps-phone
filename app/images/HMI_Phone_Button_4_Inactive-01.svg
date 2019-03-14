@@ -32,7 +32,7 @@
 		<g id="Inactive">
 			<g>
 				<text transform="matrix(1 5.460000e-03 -5.460000e-03 1 64.0738 111.6191)" class="st0 st1 st2">4</text>
-				<polyline class="st3" points="1.2,170.8 1.2,1.2 170.8,1.2 170.8,170.8 				"/>
+				<rect x="1" y="1" class="st3" width="169.5" height="169.5"/>
 			</g>
 		</g>
 		<g id="Active" class="st4">
@@ -69,7 +69,7 @@
 					<path class="st10" d="M171,1v170H1V1H171 M172,0h-1H1H0v1v170v1h1h170h1v-1V1V0L172,0z"/>
 				</g>
 			</g>
-			<text transform="matrix(1 5.460000e-03 -5.460000e-03 1 64.0738 111.6182)" class="st11 st1 st2">3</text>
+			<text transform="matrix(1 5.460000e-03 -5.460000e-03 1 64.0738 111.6182)" class="st11 st1 st2">4</text>
 		</g>
 	</g>
 </switch>
