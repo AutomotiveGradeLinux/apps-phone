@@ -34,8 +34,11 @@ Item {
     Connections {
         target: telephony
 
-        onConnectedChanged: {
-            // FIXME: keep dialpad inactive until connected
+        onOnlineChanged: {
+           dialpad.enabled = connected
+           if (!connected) {
+                number.text = ''
+           }
         }
 
         onCallStateChanged: {
@@ -82,6 +85,7 @@ Item {
         anchors.topMargin: 50
         anchors.bottomMargin: 50
         spacing: 20
+        id: dialpad
         ColumnLayout {
             Layout.alignment: Qt.AlignHCenter
             Label {
