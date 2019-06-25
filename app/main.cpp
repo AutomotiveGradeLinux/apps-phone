@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 	context->setContextProperty("telephony", telephony);
 	std::string token = secret.toStdString();
 	std::string install_dir = getenv("AFM_APP_INSTALL_DIR");
-	FilePlayer *player = new FilePlayer(port, token, install_dir + "/bin/Phone.wav", std::string("phone"));
+	FilePlayer *player = new FilePlayer(install_dir + "/bin/Phone.wav", std::string("phone"));
 	Phone *phone = new Phone(telephony, player);
 	context->setContextProperty("phone", phone);
 	QObject::connect(telephony, &Telephony::callStateChanged, phone, &Phone::onCallStateChanged);

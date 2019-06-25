@@ -21,17 +21,10 @@
 #include <thread>
 #include <gst/gst.h>
 
-extern "C"
-{
-#include <afb/afb-wsj1.h>
-#include <afb/afb-ws-client.h>
-#include <systemd/sd-event.h>
-}
-
 class FilePlayer
 {
 public:
-	FilePlayer(int port, const std::string &token, const std::string &path, const std::string &role);
+	FilePlayer(const std::string &path, const std::string &role);
 	~FilePlayer();
 
 	void play(bool loop = false);
@@ -42,10 +35,6 @@ public:
 private:
 	std::string m_path;
 	std::string m_role;
-	struct afb_wsj1 *m_ws = nullptr;
-	struct afb_wsj1_itf m_itf;
-	std::thread m_afb_thread;
-	sd_event *m_afb_loop = nullptr;
 	std::thread m_gst_thread;
 	GMainLoop *m_gst_loop = nullptr;
 	GstElement *m_playbin = nullptr;
@@ -55,7 +44,6 @@ private:
 	bool m_playing = false;
 	bool m_looping = false;
 
-	int set_role_state(bool state, std::string *output = nullptr);
 	gboolean bus_callback(GstBus *bus, GstMessage *msg);
 };
 
