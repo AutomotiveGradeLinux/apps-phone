@@ -39,9 +39,10 @@ FilePlayer::FilePlayer(const std::string &path, const std::string &role) :
 
 	// Create elements we need
 	m_playbin = gst_element_factory_make("playbin", "play");
-	m_alsa_sink = gst_element_factory_make("alsasink", NULL);
-	if(!(m_playbin && m_alsa_sink))
+	m_audio_sink = gst_element_factory_make("pwaudiosink", NULL);
+	if(!(m_playbin && m_audio_sink))
 		goto error;
+	gst_util_set_object_arg(G_OBJECT(m_audio_sink), "stream-properties", "p,media.role=Communication");
 
 	// Set up bus callback
 	m_bus = gst_pipeline_get_bus(GST_PIPELINE(m_playbin));
@@ -60,8 +61,8 @@ FilePlayer::FilePlayer(const std::string &path, const std::string &role) :
 error:
 	gst_object_unref(m_playbin);
 	m_playbin = nullptr;
-	gst_object_unref(m_alsa_sink);
-	m_alsa_sink = nullptr;
+	gst_object_unref(m_audio_sink);
+	m_audio_sink = nullptr;
 	gst_object_unref(m_bus);
 	m_bus = nullptr;
 
@@ -76,7 +77,7 @@ FilePlayer::~FilePlayer(void)
 {
 	gst_element_set_state(m_playbin, GST_STATE_NULL);
 	gst_object_unref(m_playbin);
-	gst_object_unref(m_alsa_sink);
+	gst_object_unref(m_audio_sink);
 	gst_object_unref(m_bus);
 }
 
@@ -88,7 +89,7 @@ void FilePlayer::play(bool loop)
 	m_playing = true;
 	m_looping = loop;
 
-	g_object_set(m_playbin, "audio-sink", m_alsa_sink, NULL);
+	g_object_set(m_playbin, "audio-sink", m_audio_sink, NULL);
 	std::string uri = "file://" + m_path;
 	g_object_set(m_playbin, "uri", uri.c_str(), NULL);
 

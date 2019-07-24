@@ -38,7 +38,7 @@ private:
 	std::thread m_gst_thread;
 	GMainLoop *m_gst_loop = nullptr;
 	GstElement *m_playbin = nullptr;
-	GstElement *m_alsa_sink = nullptr;
+	GstElement *m_audio_sink = nullptr;
 	GstBus *m_bus = nullptr;
 	bool m_valid = false;
 	bool m_playing = false;
