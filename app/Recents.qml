@@ -24,11 +24,11 @@ Item {
     id: root
 
     function log_icon(type) {
-        if (type == RecentCall.MISSED) {
+        if (type === RecentCall.MISSED) {
             return './images/ic_call_missed_48px.svg'
-        } else if (type == RecentCall.RECEIVED) {
+        } else if (type === RecentCall.RECEIVED) {
             return './images/ic_call_received_48px.svg'
-        } else if (type == RecentCall.DIALED) {
+        } else if (type === RecentCall.DIALED) {
             return './images/ic_call_made_48px.svg'
         }
     }

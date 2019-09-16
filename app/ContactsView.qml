@@ -26,15 +26,15 @@ Item {
     id: root
 
     function display_type(type) {
-        if (type == PhoneNumber.CELL) {
+        if (type === PhoneNumber.CELL) {
             return "M"
-        } else if (type == PhoneNumber.WORK) {
+        } else if (type === PhoneNumber.WORK) {
             return "W"
-        } else if (type == PhoneNumber.HOME) {
+        } else if (type === PhoneNumber.HOME) {
             return "H"
-        } else if (type == PhoneNumber.FAX) {
+        } else if (type === PhoneNumber.FAX) {
             return "F"
-        } else if (type == PhoneNumber.VOICE) {
+        } else if (type === PhoneNumber.VOICE) {
             return "V"
         } else {
             return "O"

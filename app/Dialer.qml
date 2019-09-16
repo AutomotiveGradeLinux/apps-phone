@@ -42,15 +42,15 @@ Item {
         }
 
         onCallStateChanged: {
-            if (telephony.callState == "incoming") {
+            if (telephony.callState === "incoming") {
                 pbap.search(telephony.callClip)
                 rejectButton.active = true
                 callStateLabel.text = "Incoming call from " + telephony.callClip
-            } else if (telephony.callState == "dialing") {
+            } else if (telephony.callState === "dialing") {
                 callStateLabel.text = "Dialing " + telephony.callColp
-            } else if (telephony.callState == "active") {
+            } else if (telephony.callState === "active") {
                 rejectButton.active = false
-            } else if (telephony.callState == "disconnected") {
+            } else if (telephony.callState === "disconnected") {
                 pbap.refreshCalls(100);
                 rejectButton.active = false
                 callButton.checked = false
@@ -63,10 +63,10 @@ Item {
         target: pbap
 
         onSearchResults: {
-            if (name != "Not Found") {
-                if (telephony.callState == "incoming") {
+            if (name !== "Not Found") {
+                if (telephony.callState === "incoming") {
                     callStateLabel.text = "Incoming call from " + name
-                } else if (telephony.callState == "dialing") {
+                } else if (telephony.callState === "dialing") {
                     callStateLabel.text = "Dialing " + name
                 }
             }
@@ -150,7 +150,7 @@ Item {
             Layout.alignment: Qt.AlignHCenter
             onImage: './images/HMI_Phone_Hangup.svg'
             offImage: './images/HMI_Phone_Call.svg'
-            property var active: (number.text.length > 0) || (telephony.callState == "incoming") || (telephony.callState == "active")
+            property var active: (number.text.length > 0) || (telephony.callState === "incoming") || (telephony.callState === "active")
             opacity: active ? 1 : 0.25
 
             onCheckedChanged: {
@@ -163,7 +163,7 @@ Item {
                     var contact = {'name': name.text, 'number': number.text}
                     if (contact.name === '')
                         contact.name = 'Unknown'
-                    if (telephony.callState == "incoming") {
+                    if (telephony.callState === "incoming") {
                         telephony.answer()
                     } else {
                         pbap.search(number.text)
