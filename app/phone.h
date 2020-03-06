@@ -18,6 +18,7 @@
 #define PHONE_H
 
 #include <QTimer>
+#include <QDateTime>
 
 #include <telephony.h>
 #include "fileplayer.h"
