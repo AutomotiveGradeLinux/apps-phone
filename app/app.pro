@@ -5,7 +5,7 @@ SOURCES = main.cpp phone.cpp fileplayer.cpp
 HEADERS = phone.h numbertype.h fileplayer.h
 
 CONFIG += link_pkgconfig
-PKGCONFIG += libhomescreen qlibwindowmanager qtappfw-phone qtappfw-bt-pbap gstreamer-1.0
+PKGCONFIG += libhomescreen qtappfw-phone qtappfw-bt-pbap gstreamer-1.0
 
 RESOURCES += \
     phone.qrc \
