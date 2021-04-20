@@ -39,7 +39,7 @@ FilePlayer::FilePlayer(const std::string &path, const std::string &role) :
 
 	// Create elements we need
 	m_playbin = gst_element_factory_make("playbin", "play");
-	m_audio_sink = gst_element_factory_make("pwaudiosink", NULL);
+	m_audio_sink = gst_element_factory_make("pipewiresink", NULL);
 	if(!(m_playbin && m_audio_sink))
 		goto error;
 	gst_util_set_object_arg(G_OBJECT(m_audio_sink), "stream-properties", "p,media.role=Communication");
