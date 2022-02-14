@@ -16,8 +16,6 @@
  */
 
 #include <QtCore/QDebug>
-#include <QtCore/QCommandLineParser>
-#include <QtCore/QUrlQuery>
 #include <QtGui/QGuiApplication>
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQml/QQmlContext>
@@ -32,54 +30,29 @@
 
 int main(int argc, char *argv[])
 {
-    QString graphic_role = QString("phone");
+	QString graphic_role = QString("phone");
 
-    QGuiApplication app(argc, argv);
-    app.setDesktopFileName(graphic_role);
+	QGuiApplication app(argc, argv);
+	app.setDesktopFileName(graphic_role);
 
-    QQuickStyle::setStyle("AGL");
+	QQuickStyle::setStyle("AGL");
 
-    QQmlApplicationEngine engine;
-
-    QCommandLineParser parser;
-    parser.addPositionalArgument("port", app.translate("main", "port for binding"));
-    parser.addPositionalArgument("secret", app.translate("main", "secret for binding"));
-    parser.addHelpOption();
-    parser.addVersionOption();
-    parser.process(app);
-    QStringList positionalArguments = parser.positionalArguments();
-
-    if (positionalArguments.length() == 2) {
-	int port = positionalArguments.takeFirst().toInt();
-	QString secret = positionalArguments.takeFirst();
-	QUrl bindingAddress;
-
-	bindingAddress.setScheme(QStringLiteral("ws"));
-	bindingAddress.setHost(QStringLiteral("localhost"));
-	bindingAddress.setPort(port);
-	bindingAddress.setPath(QStringLiteral("/api"));
-	QUrlQuery query;
-
-	query.addQueryItem(QStringLiteral("token"), secret);
-	bindingAddress.setQuery(query);
+	QQmlApplicationEngine engine;
 	QQmlContext *context = engine.rootContext();
-	context->setContextProperty(QStringLiteral("bindingAddress"), bindingAddress);
-	Telephony *telephony = new Telephony(bindingAddress);
+	Telephony *telephony = new Telephony();
 	context->setContextProperty("telephony", telephony);
 
-	std::string token = secret.toStdString();
-	std::string install_dir = getenv("AFM_APP_INSTALL_DIR");
-
-	FilePlayer *player = new FilePlayer(install_dir + "/bin/Phone.wav", std::string("phone"));
+	std::string ringtone_dir("/usr/share/sounds/ringtones");
+	FilePlayer *player = new FilePlayer(ringtone_dir + "/Phone.wav", std::string("phone"));
 	Phone *phone = new Phone(telephony, player);
 	context->setContextProperty("phone", phone);
 
 	QObject::connect(telephony, &Telephony::callStateChanged, phone, &Phone::onCallStateChanged);
-	context->setContextProperty("pbap", new Pbap(bindingAddress, context));
+	context->setContextProperty("pbap", new Pbap(context));
 
 	qmlRegisterUncreatableType<NumberType>("NumberType", 1, 0, "NumberType", "Not creatable as it is an enum type");
         engine.load(QUrl(QStringLiteral("qrc:/Phone.qml")));
-    }
-    return app.exec();
+
+	return app.exec();
 }
 

@@ -22,7 +22,7 @@
 
 #undef DEBUG
 
-static void *gst_loop_thread(GMainLoop *loop)
+static void gst_loop_thread(GMainLoop *loop)
 {
 	if(loop)
 		g_main_loop_run(loop);
@@ -116,7 +116,7 @@ gboolean FilePlayer::gstreamer_bus_callback(GstBus *bus, GstMessage *msg, gpoint
 	return static_cast<FilePlayer*>(data)->bus_callback(bus, msg);
 }
 
-gboolean FilePlayer::bus_callback(GstBus *bus, GstMessage *msg)
+gboolean FilePlayer::bus_callback(__attribute__((unused)) GstBus *bus, GstMessage *msg)
 {
 	switch (GST_MESSAGE_TYPE(msg)) {
         case GST_MESSAGE_EOS:
