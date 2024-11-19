@@ -18,7 +18,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
-import QtQuick.Controls.Styles 1.4
 import AGL.Demo.Controls 1.0
 import PhoneNumber 1.0
 
@@ -77,7 +76,7 @@ Item {
                     anchors.leftMargin: 200
                     spacing: 100
                     Image {
-                        source: model.modelData.photo ? model.modelData.photo : './images/HMI_ContactScreen_ImageHolder-01.svg'
+                        source: model.modelData.photo ? model.modelData.photo : 'qrc:/images/HMI_ContactScreen_ImageHolder-01.svg'
                         Layout.preferredWidth: 160
                         Layout.preferredHeight: 160
                     }

@@ -41,19 +41,19 @@ ApplicationWindow {
         contentHeight: 160
 
         TabImageButton {
-            icon: "./images/ic_contacts_48px.svg"
+            iconSource: "qrc:/images/ic_contacts_48px.svg"
             text: "Contacts"
             font.pixelSize: 50
         }
 
         TabImageButton {
-            icon: "./images/ic_schedule_48px.svg"
+            iconSource: "qrc:/images/ic_schedule_48px.svg"
             text: "Recents"
             font.pixelSize: 50
         }
 
         TabImageButton {
-            icon: "./images/ic_dialpad_48px.svg"
+            iconSource: "qrc:/images/ic_dialpad_48px.svg"
             text: "Dialpad"
             font.pixelSize: 50
         }

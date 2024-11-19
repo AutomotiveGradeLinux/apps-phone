@@ -25,11 +25,11 @@ Item {
 
     function log_icon(type) {
         if (type === RecentCall.MISSED) {
-            return './images/ic_call_missed_48px.svg'
+            return 'qrc:/images/ic_call_missed_48px.svg'
         } else if (type === RecentCall.RECEIVED) {
-            return './images/ic_call_received_48px.svg'
+            return 'qrc:/images/ic_call_received_48px.svg'
         } else if (type === RecentCall.DIALED) {
-            return './images/ic_call_made_48px.svg'
+            return 'qrc:/images/ic_call_made_48px.svg'
         }
     }
 
@@ -53,7 +53,7 @@ Item {
                     Layout.preferredHeight: 150
                 }
                 Image {
-                    source: './images/HMI_Phone_Contact_BlankPhoto.svg'
+                    source: 'qrc:/images/HMI_Phone_Contact_BlankPhoto.svg'
                     Layout.preferredWidth: 150
                     Layout.preferredHeight: 150
                 }

@@ -100,7 +100,7 @@ Item {
                 ImageButton {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    offImage: './images/HMI_Phone_Back_Icon.svg'
+                    offImage: 'qrc:/images/HMI_Phone_Back_Icon.svg'
                     onClicked: {
                         if (number.text.length > 0)
                             number.text = number.text.substring(0, number.text.length - 1)
@@ -130,8 +130,8 @@ Item {
                     ListElement { value: '#'; image: 'NumberSign' }
                 }
                 ImageButton {
-                    onImage: './images/HMI_Phone_Button_%1_Active-01.svg'.arg(model.image)
-                    offImage: './images/HMI_Phone_Button_%1_Inactive-01.svg'.arg(model.image)
+                    onImage: 'qrc:/images/HMI_Phone_Button_%1_Active-01.svg'.arg(model.image)
+                    offImage: 'qrc:/images/HMI_Phone_Button_%1_Inactive-01.svg'.arg(model.image)
                     onClicked: {
                         number.text += model.value
                     }
@@ -148,8 +148,8 @@ Item {
         ToggleButton {
             id: callButton
             Layout.alignment: Qt.AlignHCenter
-            onImage: './images/HMI_Phone_Hangup.svg'
-            offImage: './images/HMI_Phone_Call.svg'
+            onImage: 'qrc:/images/HMI_Phone_Hangup.svg'
+            offImage: 'qrc:/images/HMI_Phone_Call.svg'
             property var active: (number.text.length > 0) || (telephony.callState === "incoming") || (telephony.callState === "active")
             opacity: active ? 1 : 0.25
 
@@ -182,7 +182,7 @@ Item {
             Layout.alignment: Qt.AlignHCenter
             active: false
             sourceComponent: ImageButton {
-                offImage: './images/HMI_Phone_Hangup.svg'
+                offImage: 'qrc:/images/HMI_Phone_Hangup.svg'
                 onClicked: {
                     telephony.hangup()
                 }
@@ -203,7 +203,7 @@ Item {
                     anchors.fill: parent
                     spacing: 20
                     Image {
-                        source: './images/HMI_Phone_Contact_BlankPhoto.svg'
+                        source: 'qrc:/images/HMI_Phone_Contact_BlankPhoto.svg'
                     }
                     ColumnLayout {
                         Label {

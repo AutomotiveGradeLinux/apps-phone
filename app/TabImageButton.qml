@@ -41,6 +41,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.2
 import QtQuick.Controls.impl 2.2
 import QtQuick.Templates 2.2 as T
+import QtQuick.Controls.Basic 2.2
 
 T.TabButton {
     id: control
@@ -53,13 +54,13 @@ T.TabButton {
 
     padding: 6
 
-    property url icon
+    property url iconSource
 
     contentItem: ColumnLayout {
         spacing: 20
         Image {
             Layout.alignment: Qt.AlignCenter
-            source: control.icon
+            source: control.iconSource
             width: 96
             height: 96
 
@@ -70,7 +71,7 @@ T.TabButton {
             font: control.font
             elide: Text.ElideRight 
             opacity: enabled ? 1 : 0.3
-            color: !control.checked ? Default.textLightColor : control.down ? Default.textDarkColor : Default.textColor
+            color: !control.checked ? Basic.textLightColor : control.down ? Basic.textDarkColor : Basic.textColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
@@ -78,7 +79,7 @@ T.TabButton {
     background: Rectangle {
         implicitHeight: 160
         color: control.down
-            ? (control.checked ? Default.tabButtonCheckedPressedColor : Default.tabButtonPressedColor)
-            : (control.checked ? "transparent" : Default.tabButtonColor)
+            ? (control.checked ? Basic.tabButtonCheckedPressedColor : Basic.tabButtonPressedColor)
+            : (control.checked ? "transparent" : Basic.tabButtonColor)
     }
 }
